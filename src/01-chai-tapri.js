@@ -20,12 +20,40 @@
  *
  * @example
  *   chaiTapriRevenue(6)
- *   // => { totalChai: 6, totalRevenue: 70 }
- *   // 4 cutting (4*10=40) + 2 adrak (2*15=30) = 70
+//  *   // => { totalChai: 6, totalRevenue: 70 }
+//  *   // 4 cutting (4*10=40) + 2 adrak (2*15=30) = 70
  *
  *   chaiTapriRevenue(0)
  *   // => { totalChai: 0, totalRevenue: 0 }
  */
 export function chaiTapriRevenue(customers) {
-  // Your code here
+  
+
+  if (!Number.isInteger(customers) || customers < 1)
+  {
+       return { totalChai: 0, totalRevenue: 0 };
+  }
+
+  let totalChai = customers
+  let totalRevenue = 0
+
+  for (let i = 1; i <= customers; i++)
+  
+  {
+    if(i%3===0)
+    {
+      totalRevenue = totalRevenue + 15
+    }
+    else
+    {
+      totalRevenue = totalRevenue + 10
+    }
+    
+
+  }
+   return { totalChai: totalChai, totalRevenue: totalRevenue };
+
+
 }
+
+console.log(chaiTapriRevenue(6));
