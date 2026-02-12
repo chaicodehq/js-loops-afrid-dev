@@ -22,17 +22,46 @@
  * @returns {{ count: number, totalDuration: number }} Songs added and total duration
  *
  * @example
- *   buildPlaylist([240, 180, 300, 200], 600)
- *   // => { count: 2, totalDuration: 420 }
- *   // 240 + 180 = 420, next song 300 would make 720 > 600, so stop
+//  *   buildPlaylist([240, 180, 300, 200], 600)
+//  *   // => { count: 2, totalDuration: 420 }
+//  *   // 240 + 180 = 420, next song 300 would make 720 > 600, so stop
  *
- *   buildPlaylist([100, -50, 200, 150], 400)
- *   // => { count: 3, totalDuration: 450 }
- *   // Wait, 100 + 200 + 150 = 450 > 400? Let me recalculate...
- *   // 100 added (total=100), skip -50, 200 added (total=300),
- *   // 150: 300+150=450 > 400, STOP.
- *   // => { count: 2, totalDuration: 300 }
- */
+//  *   buildPlaylist([100, -50, 200, 150], 400)
+//  *   // => { count: 3, totalDuration: 450 }
+//  *   // Wait, 100 + 200 + 150 = 450 > 400? Let me recalculate...
+//  *   // 100 added (total=100), skip -50, 200 added (total=300),
+//  *   // 150: 300+150=450 > 400, STOP.
+//  *   // => { count: 2, totalDuration: 300 }
+//  */
 export function buildPlaylist(songs, maxDuration) {
-  // Your code here
+  
+  if (!Array.isArray(songs) || maxDuration <= 0 || typeof maxDuration !== 'number')
+  {
+    return { count: 0, totalDuration: 0 };
+     }
+
+   
+ let i = 0
+  let totalDuration = 0, songsCount = 0
+  while (i < songs.length) {
+    let currentSong = songs[i]
+    
+    if (currentSong <= 0 || typeof currentSong !== 'number' ) {
+      i++
+      continue;
+    }
+    if ((currentSong + totalDuration) > maxDuration) {
+      break
+    }
+    else {
+      totalDuration = totalDuration + currentSong
+    }
+    
+    songsCount++
+
+    i++
+  }
+  return { count: songsCount, totalDuration: totalDuration };
 }
+
+console.log(buildPlaylist([100,-1200,200,100,300],500));
