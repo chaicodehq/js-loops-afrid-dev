@@ -32,11 +32,56 @@
  *     [{ color: "golden", length: 5 }, { color: "white", length: 10 }, { color: "multicolor", length: 3 }],
  *     400
  *   )
- *   // golden: 5*50=250, white: 10*30=300, multicolor: 3*40=120
- *   // Total = 670 > 400, remove multicolor (670-120=550), still > 400,
- *   // remove white (550-300=250), 250 <= 400
- *   // => { selected: [{ color: "golden", length: 5, cost: 250 }], totalLength: 5, totalCost: 250 }
+//  *   // golden: 5*50=250, white: 10*30=300, multicolor: 3*40=120
+//  *   // Total = 670 > 400, remove multicolor (670-120=550), still > 400,
+//  *   // remove white (550-300=250), 250 <= 400
+//  *   // => { selected: [{ color: "golden", length: 5, cost: 250 }], totalLength: 5, totalCost: 250 }
  */
 export function diwaliLightsPlan(lightStrings, budget) {
-  // Your code here
+  let items=[]
+  if (!Array.isArray(lightStrings) || budget <= 0 || typeof budget !== 'number') {
+    return { selected: [], totalLength: 0, totalCost: 0 };
+  }
+
+  let totalCost = 0
+  let totalLength = 0
+
+  for (let item of lightStrings) {
+    let cost = 0;
+    if (item.color === "golden") {
+      cost = 50 * item.length;
+    } else if (item.color === "multicolor") {
+      cost = 40 * item.length;
+    } else if (item.color === "white") {
+      cost = 30 * item.length;
+    } else {
+      cost = 35 * item.length;
+    }
+    
+    items.push({
+      color: item.color,
+      length: item.length,
+      cost: cost
+    })
+
+     totalCost = totalCost + cost;
+     totalLength = totalLength + item.length;
+
+    
+  }
+
+  
+      while (totalCost > budget) {
+        let removedItem = items.pop();
+        totalCost = totalCost - removedItem.cost;
+        totalLength = totalLength - removedItem.length;
+
+      }
+  
+  return { selected: items , totalLength: totalLength, totalCost: totalCost }
 }
+
+
+console.log(diwaliLightsPlan([{ color: "golden", length: 5 }, { color: "white", length: 10 }, { color: "multicolor", length: 3 }],400));
+
+

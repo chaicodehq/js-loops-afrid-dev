@@ -23,12 +23,52 @@
  *     [{ name: "aloo", qty: 2 }, { name: "shimla mirch", qty: 1 }],
  *     { aloo: 30, tamatar: 40, shimla_mirch: 90 }
  *   )
- *   // shimla mirch not in priceList (key mismatch), shimla_mirch > 80
- *   // => { items: [{ name: "aloo", qty: 2, cost: 60 }], totalBill: 60 }
- *
- *   sabziMandiBill([], { aloo: 30 })
- *   // => { items: [], totalBill: 0 }
+//  *   // shimla mirch not in priceList (key mismatch), shimla_mirch > 80
+//  *   // => { items: [{ name: "aloo", qty: 2, cost: 60 }], totalBill: 60 }
+//  *
+//  *   sabziMandiBill([], { aloo: 30 })
+//  *   // => { items: [], totalBill: 0 }
  */
+
 export function sabziMandiBill(shoppingList, priceList) {
-  // Your code here
+  let items = [];
+  let totalBill = 0;
+
+  for (let item of shoppingList) {
+    let name = item.name;
+    let qty = item.qty;
+    let pricePerKg = priceList[name];
+
+    if (pricePerKg === undefined) {
+      continue;
+    }
+    if (pricePerKg > 80)
+    {
+      console.log(`${name} it is very expensive`);
+      continue
+    }
+  
+    let cost = pricePerKg * qty
+        
+    items.push({
+      name: name,
+      qty: qty,
+      cost: cost
+
+    })
+    totalBill = totalBill + cost
+    
+  }
+  return {items: items, totalBill: totalBill}
+  
 }
+
+console.log(
+  sabziMandiBill(
+    [
+      { name: "aloo", qty: 2 },
+      { name: "tamatar", qty: 3 },
+    ],
+    { aloo: 30, tamatar: 40, shimla_mirch: 90 },
+  ),
+);

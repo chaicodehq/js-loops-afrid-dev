@@ -58,7 +58,7 @@ export function buildPlaylist(songs, maxDuration) {
     }
     
     songsCount++
-
+   
     i++
   }
   return { count: songsCount, totalDuration: totalDuration };
