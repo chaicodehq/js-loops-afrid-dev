@@ -23,16 +23,50 @@
  *
  * @example
  *   biryaniBatchProcessor([3, 7, 2])
- *   // Order 3: 1 batch (3 plates)
- *   // Order 7: 2 batches (5 + 2 plates)
- *   // Order 2: 1 batch (2 plates)
- *   // => { totalBatches: 4, totalPlates: 12, ordersProcessed: 3 }
+//  *   // Order 3: 1 batch (3 plates)
+//  *   // Order 7: 2 batches (5 + 2 plates)
+//  *   // Order 2: 1 batch (2 plates)
+//  *   // => { totalBatches: 4, totalPlates: 12, ordersProcessed: 3 }
  *
  *   biryaniBatchProcessor([5, 10])
- *   // Order 5: 1 batch (5 plates)
- *   // Order 10: 2 batches (5 + 5 plates)
- *   // => { totalBatches: 3, totalPlates: 15, ordersProcessed: 2 }
+//  *   // Order 5: 1 batch (5 plates)
+//  *   // Order 10: 2 batches (5 + 5 plates)
+//  *   // => { totalBatches: 3, totalPlates: 15, ordersProcessed: 2 }
  */
+
 export function biryaniBatchProcessor(orders) {
-  // Your code here
+  if (!Array.isArray(orders) || orders.length === 0) {
+    return { totalBatches: 0, totalPlates: 0, ordersProcessed: 0 };
+  }
+
+  let totalBatches = 0;
+  let totalPlates = 0;
+  let ordersProcessed = 0;
+
+  for (let order of orders) {
+    if (typeof order !== "number" || order <= 0 || !Number.isInteger(order)) {
+      continue;
+    }
+
+    let remainingPlates = order;
+    ordersProcessed++;
+    totalPlates += order;
+
+    do {
+      totalBatches++;
+      remainingPlates -= 5;
+    } while (remainingPlates > 0);
+  }
+
+  return {
+    totalBatches: totalBatches,
+    totalPlates: totalPlates,
+    ordersProcessed: ordersProcessed,
+  };
 }
+
+console.log(biryaniBatchProcessor([3, 7, 2]));
+
+console.log(biryaniBatchProcessor([5, 10]));
+
+console.log(biryaniBatchProcessor([5, -2, 3.5, "biryani", 0]));
